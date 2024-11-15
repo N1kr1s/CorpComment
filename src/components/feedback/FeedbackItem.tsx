@@ -1,5 +1,5 @@
 import { TriangleUpIcon } from '@radix-ui/react-icons'
-import { FeedbackItemProps } from '../lib/interfaces'
+import { FeedbackItemProps } from '../../lib/interfaces'
 
 function FeedbackItem({ feedbackItem }: FeedbackItemProps) {
   const { upvoteCount, badgeLetter, company, text, daysAgo } = feedbackItem
@@ -16,7 +16,7 @@ function FeedbackItem({ feedbackItem }: FeedbackItemProps) {
         <p>{company}</p>
         <p>{text}</p>
       </div>
-      <p>{daysAgo}d</p>
+      <p>{daysAgo === 0 ? 'NEW' : `${daysAgo}d`}</p>
     </li>
   )
 }

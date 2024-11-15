@@ -16,3 +16,21 @@ export interface Response {
 export interface FeedbackItemProps {
   feedbackItem: FeedbackItems
 }
+
+export interface PassedProps {
+  feedbackItems: FeedbackItems[]
+  error: string
+  isLoading: boolean
+}
+
+export interface AddToListProps {
+  handleAddToList: (text: string) => void
+}
+
+export interface CompanyListProps {
+  companyList: string[]
+}
+
+export interface HashtagItemProps {
+  company: string
+}
