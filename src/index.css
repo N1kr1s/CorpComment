@@ -578,6 +578,12 @@ h1 > span {
   opacity: 0.85;
 }
 
+.error-message {
+  color: crimson;
+  text-align: center;
+  font-size: bold;
+}
+
 /* MEDIA QUERIES */
 @media (max-height: 925px) {
   body {
