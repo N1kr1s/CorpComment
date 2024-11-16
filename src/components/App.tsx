@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import Container from './layout/Container'
 import Footer from './layout/Footer'
 import HashtagList from './hashtag/HashtagList'
@@ -11,10 +11,24 @@ function App() {
   const [feedbackItems, setFeedbackItems] = useState<FeedbackItems[]>([])
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState('')
+  const [selectedCompany, setSelectedCompany] = useState('')
 
-  const companyList = [
-    ...new Set(feedbackItems.map((feedbackItem) => `#${feedbackItem.company}`)),
-  ]
+  const companyList = useMemo(
+    () => [
+      ...new Set(
+        feedbackItems.map((feedbackItem) => `${feedbackItem.company}`)
+      ),
+    ],
+    [feedbackItems]
+  )
+
+  const filteredFeedbackItems = useMemo(
+    () =>
+      selectedCompany
+        ? feedbackItems.filter((item) => item.company === selectedCompany)
+        : feedbackItems,
+    [selectedCompany, feedbackItems]
+  )
 
   const handleAddToList = async (text: string): Promise<void> => {
     const company = text
@@ -43,6 +57,8 @@ function App() {
     })
   }
 
+  const handleSelectedCompany = (company: string) => setSelectedCompany(company)
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -70,11 +86,14 @@ function App() {
       <Container
         isLoading={isLoading}
         error={error}
-        feedbackItems={feedbackItems}
+        feedbackItems={filteredFeedbackItems}
         handleAddToList={handleAddToList}
       />
 
-      <HashtagList companyList={companyList} />
+      <HashtagList
+        companyList={companyList}
+        handleSelectedCompany={handleSelectedCompany}
+      />
     </div>
   )
 }

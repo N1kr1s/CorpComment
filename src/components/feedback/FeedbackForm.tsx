@@ -4,6 +4,8 @@ import { AddToListProps } from '../../lib/interfaces'
 
 function FeedbackForm({ handleAddToList }: AddToListProps) {
   const [text, setText] = useState('')
+  const [showValidIndicator, setShowValidIndicator] = useState(false)
+  const [showInvalidIndicator, setShowInvalidIndicator] = useState(false)
   const charCount = MAX_CHARACTERS - text.length
 
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -16,12 +18,31 @@ function FeedbackForm({ handleAddToList }: AddToListProps) {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
+
+    if (text.includes('#') && text.length >= 5) {
+      setShowValidIndicator(true)
+      setTimeout(() => {
+        setShowValidIndicator(false)
+      }, 2000)
+    } else {
+      setShowInvalidIndicator(true)
+      setTimeout(() => {
+        setShowInvalidIndicator(false)
+      }, 2000)
+      return
+    }
+
     handleAddToList(text)
     setText('')
   }
 
   return (
-    <form className='form' onSubmit={handleSubmit}>
+    <form
+      className={`form ${showValidIndicator ? 'form--valid' : ''} ${
+        showInvalidIndicator ? 'form--invalid' : ''
+      }`}
+      onSubmit={handleSubmit}
+    >
       <textarea
         value={text}
         onChange={handleChange}

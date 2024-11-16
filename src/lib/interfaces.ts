@@ -28,9 +28,11 @@ export interface AddToListProps {
 }
 
 export interface CompanyListProps {
+  handleSelectedCompany: (company: string) => void
   companyList: string[]
 }
 
 export interface HashtagItemProps {
+  handleSelectedCompany: (company: string) => void
   company: string
 }

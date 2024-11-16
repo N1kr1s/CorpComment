@@ -1,9 +1,9 @@
 import { HashtagItemProps } from '../../lib/interfaces'
 
-function HashtagItem({ company }: HashtagItemProps) {
+function HashtagItem({ company, handleSelectedCompany }: HashtagItemProps) {
   return (
     <li>
-      <button>{company}</button>
+      <button onClick={() => handleSelectedCompany(company)}>#{company}</button>
     </li>
   )
 }
