@@ -7,7 +7,7 @@ export interface FeedbackItems {
   text: string
 }
 
-export interface Response {
+export interface ResponseData {
   feedbacks: FeedbackItems[]
   public: boolean
   sorted: boolean
@@ -33,6 +33,15 @@ export interface CompanyListProps {
 }
 
 export interface HashtagItemProps {
-  handleSelectedCompany: (company: string) => void
   company: string
+}
+
+export interface IFeedbackItems {
+  isLoading: boolean
+  error: string
+  feedbackItems: FeedbackItems[]
+  handleAddToList: (text: string) => Promise<void>
+  companyList: string[]
+  handleSelectedCompany: (company: string) => void
+  filteredFeedbackItems: FeedbackItems[]
 }

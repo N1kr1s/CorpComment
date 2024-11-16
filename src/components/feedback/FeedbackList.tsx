@@ -1,16 +1,19 @@
 import FeedbackItem from './FeedbackItem'
 import Spinner from '../Spinner'
 import ErrorMessage from '../ErrorMessage'
-import { PassedProps } from '../../lib/interfaces'
+import { useGlobalContext } from '../../lib/hook'
 
-function FeedbackList({ feedbackItems, isLoading, error }: PassedProps) {
+function FeedbackList() {
+  const globalContext = useGlobalContext()
+  const { isLoading, error, filteredFeedbackItems } = globalContext!
+
   return (
     <ol className='feedback-list'>
       {isLoading && <Spinner />}
 
       {error && <ErrorMessage message={error} />}
 
-      {feedbackItems.map((feedbackItem) => (
+      {filteredFeedbackItems.map((feedbackItem) => (
         <FeedbackItem key={feedbackItem.id} feedbackItem={feedbackItem} />
       ))}
     </ol>

@@ -1,15 +1,13 @@
-import { CompanyListProps } from '../../lib/interfaces'
+import { useGlobalContext } from '../../lib/hook'
 import HashtagItem from './HashtagItem'
 
-function HashtagList({ companyList, handleSelectedCompany }: CompanyListProps) {
+function HashtagList() {
+  const globalContext = useGlobalContext()
+  const { companyList } = globalContext!
   return (
     <ul className='hashtags'>
       {companyList.map((company) => (
-        <HashtagItem
-          key={company}
-          company={company}
-          handleSelectedCompany={handleSelectedCompany}
-        />
+        <HashtagItem key={company} company={company} />
       ))}
     </ul>
   )

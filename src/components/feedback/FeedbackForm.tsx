@@ -1,11 +1,14 @@
 import { useState } from 'react'
 import { MAX_CHARACTERS } from '../../lib/constants'
-import { AddToListProps } from '../../lib/interfaces'
+import { useGlobalContext } from '../../lib/hook'
 
-function FeedbackForm({ handleAddToList }: AddToListProps) {
+function FeedbackForm() {
   const [text, setText] = useState('')
   const [showValidIndicator, setShowValidIndicator] = useState(false)
   const [showInvalidIndicator, setShowInvalidIndicator] = useState(false)
+  const globalContext = useGlobalContext()
+  const { handleAddToList } = globalContext!
+
   const charCount = MAX_CHARACTERS - text.length
 
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
