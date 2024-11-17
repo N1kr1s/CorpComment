@@ -1,10 +1,6 @@
-import React, { createContext, useEffect, useMemo, useState } from 'react'
-import {
-  FeedbackItems,
-  IFeedbackItems,
-  ResponseData,
-} from '../../lib/interfaces'
-
+import React, { createContext, useMemo, useState } from 'react'
+import { FeedbackItems, IFeedbackItems } from '../../lib/interfaces'
+import { useFetch } from '../../lib/useFetch'
 const URL =
   'https://bytegrad.com/course-assets/projects/corpcomment/api/feedbacks'
 
@@ -12,9 +8,7 @@ const URL =
 export const GlobalContext = createContext<IFeedbackItems | null>(null)
 
 function GlobalContextProvider({ children }: React.PropsWithChildren) {
-  const [feedbackItems, setFeedbackItems] = useState<FeedbackItems[]>([])
-  const [isLoading, setIsLoading] = useState(false)
-  const [error, setError] = useState('')
+  const { feedbackItems, setFeedbackItems, isLoading, error } = useFetch(URL)
   const [selectedCompany, setSelectedCompany] = useState('')
 
   const filteredFeedbackItems = useMemo(
@@ -62,26 +56,6 @@ function GlobalContextProvider({ children }: React.PropsWithChildren) {
       body: JSON.stringify(newItem),
     })
   }
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        setIsLoading(true)
-        const response = await fetch(URL)
-        if (!response.ok) {
-          throw new Error()
-        }
-        const data: ResponseData = await response.json()
-        setFeedbackItems(data.feedbacks)
-        setIsLoading(false)
-      } catch {
-        setIsLoading(false)
-        setError('Something went wrong')
-      }
-    }
-
-    fetchData()
-  }, [])
 
   return (
     <GlobalContext.Provider
